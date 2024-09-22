@@ -56,7 +56,7 @@ archive.ics.uci.edu
 copilot.microsoft.com
 qv2ray-net.pages.dev
 v2raya.org
-m.happymh.com
+happymh.com
 www.kaggle.com
 
 @@*.educoder.net/*
