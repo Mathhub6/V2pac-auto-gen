@@ -1,0 +1,14 @@
+# Dependabot configuration file for GitHub Actions updates
+# For full configuration options, refer to the documentation:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"  # The root directory of the repository
+    schedule:
+      interval: "daily"  # Check for updates daily
+      timezone: "Asia/Shanghai"  # Use Shanghai timezone
+      time: "07:00"  # At 07:00 AM Shanghai time
+    pull-request-branch-name:
+      separator: "-"  # Use dash as separator in branch names
