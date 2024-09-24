@@ -29,6 +29,7 @@
 *.vuejs.org
 *.unpkg.com,
 *.npmjs.com
+nodejs.org
 
 *.jetbrains.com
 
