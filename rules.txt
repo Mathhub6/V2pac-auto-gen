@@ -20,45 +20,45 @@
 !   但其它格式如wingy, dnsmasq则无此必要, 例外规则将被忽略, 所有规则将被排序
 ! 
 
-*.github.com
-*.githubusercontent.com
-*.githubassets.com
-*.github.io
+.github.com/
+.githubusercontent.com/
+.githubassets.com/
+.github.io/
 
-*.reactjs.org
-*.vuejs.org
-*.unpkg.com,
-*.npmjs.com
-nodejs.org
+.reactjs.org/
+.vuejs.org/
+.unpkg.com/
+.npmjs.com/
+nodejs.org/
 
-*.jetbrains.com
+.jetbrains.com/
 
-*.pub.dev
-*.flutter.dev
+.pub.dev/
+.flutter.dev/
 
-*.chatgpt.com
-*.embyplus.org
-*.9521732.xyz
-*.openai.com
-*.tencloud.net
+.chatgpt.com/
+.embyplus.org/
+.9521732.xyz/
+.openai.com/
+.tencloud.net/
 
 twitter.com
 www.youtube.com
 
-claude.ai
-www.anthropic.com
-www.bing.com
-www.google.com
-.singlelogin.re
-.singlelogin.rs
-dlz1.fcdn.sk
-github.dev
-archive.ics.uci.edu
-copilot.microsoft.com
-qv2ray-net.pages.dev
-v2raya.org
-happymh.com
-www.kaggle.com
+.claude.ai/
+www.anthropic.com/
+www.bing.com/
+www.google.com/
+.singlelogin.re/
+.singlelogin.rs/
+dlz1.fcdn.sk/
+github.dev/
+archive.ics.uci.edu/
+copilot.microsoft.com/
+qv2ray-net.pages.dev/
+v2raya.org/
+.happymh.com/
+www.kaggle.com/
 
 @@*.educoder.net/*
 @@*.sina.com/*
