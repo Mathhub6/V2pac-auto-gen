@@ -59,6 +59,8 @@ qv2ray-net.pages.dev/
 v2raya.org/
 .happymh.com/
 www.kaggle.com/
+.toongod.org/
+.disquscdn.com/
 
 @@*.educoder.net/*
 @@*.sina.com/*
@@ -69,6 +71,9 @@ www.kaggle.com/
 @@*.csdn.net/*
 @@*.weixin.qq.com/*
 @@*.embyplus.org/* 
+@@*.mosha.cloud/*
+@@*.zhangsan.shop/*
+
  
 
 
