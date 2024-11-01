@@ -1,6 +1,6 @@
 /**
  * genpac 3.0.1 https://github.com/JinnLynn/genpac
- * Generated: 2024-10-26 22:12:50
+ * Generated: 2024-11-01 12:25:41
  * GFWList Last-Modified: 2024-10-07 15:39:43
  * GFWList From: online[https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt]
  */
@@ -14,8 +14,10 @@ var rules = [
             "chaoxing.com",
             "csdn.net",
             "educoder.net",
+            "mosha.cloud",
             "sina.com",
             "weixin.qq.com",
+            "zhangsan.shop",
             "zhihu.com"
         ],
         [
@@ -31,6 +33,7 @@ var rules = [
             "claude.ai",
             "copilot.microsoft.com",
             "data.hicloud.com",
+            "disquscdn.com",
             "dlz1.fcdn.sk",
             "embyplus.org",
             "flutter.dev",
@@ -55,6 +58,7 @@ var rules = [
             "singlelogin.rs",
             "skwai.com",
             "tencloud.net",
+            "toongod.org",
             "toutiao.com",
             "twitter.com",
             "unpkg.com",
