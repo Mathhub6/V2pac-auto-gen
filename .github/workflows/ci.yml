@@ -17,23 +17,28 @@ on:
 permissions:
   contents: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  TZ: Asia/Shanghai
+
 jobs:
   build:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Set variables
+      - name: Set variables (China Time)
         run: |
-          echo "RELEASE_NAME=update on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=update on $(date +%Y%m%d%H%M)" >> "$GITHUB_ENV"
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> "$GITHUB_ENV"
+          echo "FORMATTED_DATE=$(date +%F)" >> "$GITHUB_ENV"
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Set up Python 3.9
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.9"
 
@@ -42,37 +47,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install genpac
 
-      - name: Get current time
-        uses: josStorer/get-current-time@v2
-        id: time
-        with:
-          format: yyyy-MM-DD
-
       - name: Download GFWLIST file
-        run: curl -L -o gfwlist.txt https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
-
-      - name: Commit changes to gfwlist.txt
-        if: github.event_name != 'pull_request'
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add gfwlist.txt
-          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} update ./gfwlist.txt" || echo "No changes to commit"
+          curl -L -o gfwlist.txt \
+            https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
       - name: Download AWAvenue-Ads-Rule file
-        run: curl -L -o AWAvenue-Ads-Rule.txt https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt
+        run: |
+          curl -L -o AWAvenue-Ads-Rule.txt \
+            https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt
 
-      - name: Commit changes to AWAvenue-Ads-Rule.txt
+      - name: Commit source file changes
         if: github.event_name != 'pull_request'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add AWAvenue-Ads-Rule.txt
-          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} update ./AWAvenue-Ads-Rule.txt" || echo "No changes to commit"
 
-      - name: Push committed source updates
-        if: github.event_name != 'pull_request'
-        run: |
+          git add gfwlist.txt AWAvenue-Ads-Rule.txt
+          git commit -m "chore: ${FORMATTED_DATE} update source files" || echo "No changes to commit"
           git push origin HEAD:master || echo "Nothing to push"
 
       - name: Generate configuration files
@@ -85,14 +77,15 @@ jobs:
             --user-rule-from="./rules.txt,./AWAvenue-Ads-Rule.txt" \
             -o ./pac/pac.txt
 
-      - name: Commit changes to pac.txt
-        uses: EndBug/add-and-commit@v9
+      - name: Commit pac.txt
         if: github.event_name != 'pull_request'
-        with:
-          add: "./pac/pac.txt"
-          message: "chore: ${{ steps.time.outputs.formattedTime }} update ./pac/pac.txt"
-          author_name: "github-actions[bot]"
-          author_email: "github-actions[bot]@users.noreply.github.com"
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add ./pac/pac.txt
+          git commit -m "chore: ${FORMATTED_DATE} update ./pac/pac.txt" || echo "No changes to commit"
+          git push origin HEAD:master || echo "Nothing to push"
 
       - name: Fetch tags
         if: github.event_name != 'pull_request'
