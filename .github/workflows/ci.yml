@@ -7,28 +7,35 @@ on:
     branches:
       - master
     paths:
-      - '.github/workflows/*.yml'
-      - 'rules.txt'
+      - ".github/workflows/*.yml"
+      - "rules.txt"
   pull_request:
     branches:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
+
     steps:
       - name: Set variables
         run: |
           echo "RELEASE_NAME=update on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Python 3.13
+      - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.9"
 
       - name: Upgrade pip and install dependencies
         run: |
@@ -42,55 +49,72 @@ jobs:
           format: yyyy-MM-DD
 
       - name: Download GFWLIST file
-        run: curl -O https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+        run: curl -L -o gfwlist.txt https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
-      - name: Force commit changes to gfwlist.txt
+      - name: Commit changes to gfwlist.txt
+        if: github.event_name != 'pull_request'
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add gfwlist.txt
-          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} force update ./gfwlist.txt" || echo "No changes to commit"
+          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} update ./gfwlist.txt" || echo "No changes to commit"
 
       - name: Download AWAvenue-Ads-Rule file
-        run: curl -O https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt
+        run: curl -L -o AWAvenue-Ads-Rule.txt https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt
 
-      - name: Force commit changes to AWAvenue-Ads-Rule.txt
+      - name: Commit changes to AWAvenue-Ads-Rule.txt
+        if: github.event_name != 'pull_request'
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add AWAvenue-Ads-Rule.txt
-          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} force update ./AWAvenue-Ads-Rule.txt" || echo "No changes to commit"
+          git commit -m "chore: ${{ steps.time.outputs.formattedTime }} update ./AWAvenue-Ads-Rule.txt" || echo "No changes to commit"
+
+      - name: Push committed source updates
+        if: github.event_name != 'pull_request'
+        run: |
+          git push origin HEAD:master || echo "Nothing to push"
 
       - name: Generate configuration files
         run: |
-          mkdir -p output
-          genpac --format=pac --pac-proxy "__PROXY__" --gfwlist-local='./gfwlist.txt' --user-rule-from './rules.txt,./AWAvenue-Ads-Rule.txt' -o ./pac/pac.txt
+          mkdir -p pac
+          genpac \
+            --format=pac \
+            --pac-proxy="__PROXY__" \
+            --gfwlist-local="./gfwlist.txt" \
+            --user-rule-from="./rules.txt,./AWAvenue-Ads-Rule.txt" \
+            -o ./pac/pac.txt
 
-
-
-
-          
       - name: Commit changes to pac.txt
         uses: EndBug/add-and-commit@v9
         if: github.event_name != 'pull_request'
         with:
+          add: "./pac/pac.txt"
           message: "chore: ${{ steps.time.outputs.formattedTime }} update ./pac/pac.txt"
-          add: ./pac/pac.txt
           author_name: "github-actions[bot]"
           author_email: "github-actions[bot]@users.noreply.github.com"
 
+      - name: Fetch tags
+        if: github.event_name != 'pull_request'
+        run: git fetch --tags --force
+
       - name: Delete previous release and tag
+        if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          previous_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          previous_tag=$(git tag --sort=-creatordate | head -n 1)
+
           if [ -n "$previous_tag" ]; then
             echo "Deleting previous tag: $previous_tag"
-            git push --delete origin $previous_tag
-            gh release delete $previous_tag --repo $GITHUB_REPOSITORY --yes
+            git push --delete origin "$previous_tag" || true
+            gh release delete "$previous_tag" --repo "$GITHUB_REPOSITORY" --yes || true
+          else
+            echo "No previous tag found"
           fi
 
       - name: Release and upload assets
+        if: github.event_name != 'pull_request'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
