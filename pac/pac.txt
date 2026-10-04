@@ -1,7 +1,7 @@
 /**
  * genpac 3.0.1 https://github.com/JinnLynn/genpac
- * Generated: 2026-09-27 08:03:08
- * GFWList Last-Modified: 2026-09-26 20:29:53
+ * Generated: 2026-10-04 08:14:15
+ * GFWList Last-Modified: 2026-10-02 21:31:18
  * GFWList From: online[https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt]
  */
 
@@ -1432,6 +1432,7 @@ var rules = [
             "futustatic.com",
             "fututrade.com",
             "fututrustee.com",
+            "fuyin116.com",
             "fw.cm",
             "fxcm-chinese.com",
             "fxnetworks.com",
@@ -2582,6 +2583,7 @@ var rules = [
             "mubi.com",
             "mullvad.net",
             "multiply.com",
+            "muse.ai",
             "music.amazon.com",
             "musixmatch.com",
             "muzi.com",
@@ -3296,6 +3298,7 @@ var rules = [
             "simplex.chat",
             "sina.com.hk",
             "sinchew.com.my",
+            "sing-box.sagernet.org",
             "singaporepools.com.sg",
             "singlelogin.se",
             "singtao.com",
@@ -4036,6 +4039,7 @@ var rules = [
             "wainao.me",
             "walletconnect.com",
             "walletconnect.org",
+            "wallhaven.cc",
             "wallmama.com",
             "wallpapercasa.com",
             "wallsttv.com",
