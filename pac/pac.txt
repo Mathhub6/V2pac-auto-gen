@@ -1,7 +1,7 @@
 /**
  * genpac 3.0.1 https://github.com/JinnLynn/genpac
- * Generated: 2026-10-25 07:51:47
- * GFWList Last-Modified: 2026-10-24 23:33:57
+ * Generated: 2026-11-01 08:32:20
+ * GFWList Last-Modified: 2026-10-31 13:12:41
  * GFWList From: online[https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt]
  */
 
@@ -303,6 +303,7 @@ var rules = [
             "anonfiles.com",
             "anonymouse.org",
             "anthonycalzadilla.com",
+            "anthropic.auth0.com",
             "anthropic.com",
             "antiwave.net",
             "antpool.com",
@@ -326,6 +327,7 @@ var rules = [
             "api.recaptcha.net",
             "api.shuaiapi.com",
             "api.steampowered.com",
+            "api.themoviedb.org",
             "apiary.io",
             "apigee.com",
             "apk.support",
@@ -610,6 +612,7 @@ var rules = [
             "brookings.edu",
             "brutaltgp.com",
             "bsky.app",
+            "bsky.chat",
             "bsky.network",
             "bsky.social",
             "bt4g.org",
@@ -835,7 +838,10 @@ var rules = [
             "clashyun.com",
             "classicalguitarblog.net",
             "claude.ai",
+            "claude.app",
             "claude.com",
+            "claudemcpcontent.com",
+            "claudeusercontent.com",
             "cldr.unicode.org",
             "clearsurance.com",
             "clementine-player.org",
@@ -3767,6 +3773,7 @@ var rules = [
             "torproject.org",
             "torrentgalaxy.to",
             "torrentkitty.tv",
+            "torrentleech.org",
             "torrentprivacy.com",
             "torrentproject.se",
             "torrenty.org",
@@ -4395,6 +4402,7 @@ var rules = [
             "youtubegaming.com",
             "youtubekids.com",
             "youversion.com",
+            "youversionapi.com",
             "youwin.com",
             "youxu.info",
             "yt.be",
